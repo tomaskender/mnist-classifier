@@ -1,4 +1,4 @@
-from torch import nn, save, load, argmax
+from torch import nn, save, load, argmax, device, cuda
 from torch.optim import Adam
 from torch.utils.data import DataLoader
 from torchvision import datasets
@@ -10,7 +10,8 @@ from PIL import Image
 
 MODEL_FILENAME = 'model.pt'
 TEST_FILENAME = 'test.jpg'
-DEVICE = 'cpu'
+DEVICE = device('cuda' if cuda.is_available() else 'cpu')
+print("Using CUDA:", cuda.is_available())
 train = datasets.MNIST(root='./data', download=True, train=True, transform=ToTensor())
 dataset = DataLoader(train, 32)
 
